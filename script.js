@@ -170,6 +170,14 @@ function updateResultDisplay(canteenName, categoryScores, penaltyScore, totalSco
     gradeText.textContent = gradeInfo.grade;
     gradeText.className = 'grade-badge ' + gradeInfo.className;
     
+    // 在等级旁边添加emoji
+    const gradeEmoji = document.createElement('span');
+    gradeEmoji.className = 'grade-emoji';
+    gradeEmoji.textContent = ' ' + gradeInfo.emoji;
+    gradeEmoji.style.fontSize = '1.2em';
+    gradeEmoji.style.marginLeft = '0.5rem';
+    gradeText.appendChild(gradeEmoji);
+    
     // 更新评价文本
     updateEvaluationText(canteenName, totalScore, gradeInfo, categoryScores, penaltyScore);
 }
@@ -178,28 +186,33 @@ function updateResultDisplay(canteenName, categoryScores, penaltyScore, totalSco
 function getGradeInfo(score) {
     if (score >= 90) {
         return {
-            grade: '卓越食堂',
-            className: 'grade-excellent'
+            grade: '⭐ 卓越食堂 ⭐',
+            className: 'grade-excellent',
+            emoji: '⭐⭐⭐⭐⭐'
         };
     } else if (score >= 80) {
         return {
-            grade: '优秀食堂',
-            className: 'grade-good'
+            grade: '😊 优秀食堂 😊',
+            className: 'grade-good',
+            emoji: '😊😊😊😊'
         };
     } else if (score >= 70) {
         return {
-            grade: '达标食堂',
-            className: 'grade-average'
+            grade: '👍 达标食堂 👍',
+            className: 'grade-average',
+            emoji: '👍👍👍'
         };
     } else if (score >= 60) {
         return {
-            grade: '待改进食堂',
-            className: 'grade-poor'
+            grade: '😐 待改进食堂 😐',
+            className: 'grade-poor',
+            emoji: '😐😐'
         };
     } else {
         return {
-            grade: '不合格食堂',
-            className: 'grade-fail'
+            grade: '🤬 不合格食堂 🤬',
+            className: 'grade-fail',
+            emoji: '🤬🤬🤬🤬🤬'
         };
     }
 }
@@ -212,39 +225,49 @@ function updateEvaluationText(canteenName, totalScore, gradeInfo, categoryScores
     // 根据总分生成夸张评价
     if (totalScore >= 90) {
         text = `
+            <p><strong>⭐ ⭐ ⭐ ⭐ ⭐</strong></p>
             <p><strong>哇塞！${canteenName}简直是食堂界的爱马仕！</strong></p>
             <p>这食堂简直绝了！食材新鲜得像刚从地里摘的，厨师手艺堪比米其林大厨，价格还这么良心！</p>
             <p>环境干净得可以在地上打滚，服务态度好到让人怀疑是不是在五星级酒店！</p>
             <p>强烈建议全校师生都来这里吃饭，这简直是校园生活的幸福源泉！</p>
+            <p style="font-size: 1.5rem; text-align: center; margin-top: 1rem;">⭐⭐⭐⭐⭐ 五星推荐！ ⭐⭐⭐⭐⭐</p>
         `;
     } else if (totalScore >= 80) {
         text = `
+            <p><strong>😊 😊 😊 😊</strong></p>
             <p><strong>不错不错！${canteenName}是校园里的宝藏食堂！</strong></p>
             <p>饭菜味道相当可以，价格也合理，环境整洁舒适，服务态度也不错。</p>
             <p>偶尔来点新菜品就更完美了，继续保持这个水准，绝对是校园餐饮的标杆！</p>
             <p>推荐给所有同学，不会踩雷的好选择！</p>
+            <p style="font-size: 1.5rem; text-align: center; margin-top: 1rem;">😊😊😊😊 四星好评！ 😊😊😊😊</p>
         `;
     } else if (totalScore >= 70) {
         text = `
+            <p><strong>👍 👍 👍</strong></p>
             <p><strong>嗯...${canteenName}还算过得去。</strong></p>
             <p>饭菜能吃，价格能接受，环境也还行，就是没什么亮点。</p>
             <p>属于那种"饿了就去吃，不饿也不会特意去"的食堂。</p>
             <p>建议食堂多听听学生意见，改进一下菜品多样性，提升空间还很大！</p>
+            <p style="font-size: 1.5rem; text-align: center; margin-top: 1rem;">👍👍👍 三星达标 👍👍👍</p>
         `;
     } else if (totalScore >= 60) {
         text = `
+            <p><strong>😐 😐</strong></p>
             <p><strong>啊这...${canteenName}需要好好改进啊！</strong></p>
             <p>饭菜味道一般般，价格还有点小贵，环境和服务都马马虎虎。</p>
             <p>属于"实在没得选了才去吃"的类型，吃完不会有什么幸福感。</p>
             <p>食堂管理方得加把劲了，不然学生都要跑光了！</p>
+            <p style="font-size: 1.5rem; text-align: center; margin-top: 1rem;">😐😐 有待改进 😐😐</p>
         `;
     } else {
         text = `
+            <p><strong>🤬 🤬 🤬 🤬 🤬</strong></p>
             <p><strong>拉爆了！${canteenName}这能吃得下去饭？</strong></p>
             <p>我的天呐！这食堂是在开玩笑吗？食材不新鲜，味道奇怪，价格还死贵！</p>
             <p>环境脏乱差，服务态度恶劣，各种不合理规定一大堆！</p>
             <p>强烈建议学校相关部门介入调查，这食堂简直是在挑战学生的忍耐极限！</p>
             <p>同学们，珍爱生命，远离此食堂！</p>
+            <p style="font-size: 1.5rem; text-align: center; margin-top: 1rem; color: #e53e3e;">🤬🤬🤬 严重警告！ 🤬🤬🤬</p>
         `;
     }
     
